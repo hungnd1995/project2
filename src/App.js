@@ -15,49 +15,59 @@ import CartPage from "./pages/Cart";
 import SuccessPage from "./pages/Success";
 import NotFound from "./pages/NotFound";
 
+import { getCategories } from "./services/Api";
+
 function App() {
+  const [categories, setCategories] = React.useState([]);
+  React.useEffect(() => {
+    getCategories({}).then((res) => {
+      setCategories(res.data.data.docs);
+    });
+  }, []);
   return (
     <div>
-      <Header />
-      {/*	End Header	*/}
-      {/*	Body	*/}
-      <div id="body">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12 col-md-12 col-sm-12">
-              <Menu />
+      ]
+      <BrowserRouter>
+        <Header />
+        {/*	End Header	*/}
+        {/*	Body	*/}
+        <div id="body">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 col-md-12 col-sm-12">
+                <Menu item={categories} />
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div id="main" className="col-lg-8 col-md-12 col-sm-12">
-              {/*	Slider	*/}
-              <Slider />
-              {/*	End Slider	*/}
-              {/*	Feature Product	*/}
+            <div className="row">
+              <div id="main" className="col-lg-8 col-md-12 col-sm-12">
+                {/*	Slider	*/}
+                <Slider />
+                {/*	End Slider	*/}
+                {/*	Feature Product	*/}
 
-              <BrowserRouter>
                 <Switch>
                   <Route path="/" exact component={HomePage} />
-                  <Route path="/category" component={CategoryPage} />
+                  <Route exact path="/category-:id" component={CategoryPage} />
                   <Route
+                    exact
                     path="/product-details"
                     component={ProductDetailsPage}
                   />
                   <Route path="/search" component={SearchPage} />
-                  <Route path="/cart" component={CartPage} />
-                  <Route path="/success" component={SuccessPage} />
+                  <Route exact path="/cart" component={CartPage} />
+                  <Route exact path="/success" component={SuccessPage} />
                   <Route component={NotFound} />
                 </Switch>
-              </BrowserRouter>
 
-              {/*	End Latest Product	*/}
+                {/*	End Latest Product	*/}
+              </div>
+              <Sidebar />
             </div>
-            <Sidebar />
           </div>
         </div>
-      </div>
-      {/*	End Body	*/}
-      <Footer />
+        {/*	End Body	*/}
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }
