@@ -50,11 +50,11 @@ function App() {
                   <Route exact path="/category-:id" component={CategoryPage} />
                   <Route
                     exact
-                    path="/product-details"
+                    path="/product-details-:id"
                     component={ProductDetailsPage}
                   />
-                  <Route path="/search" component={SearchPage} />
-                  <Route exact path="/cart" component={CartPage} />
+                  <Route exact path="/search" component={SearchPage} />
+                  <Route exact path="/cart" exact component={CartPage} />
                   <Route exact path="/success" component={SuccessPage} />
                   <Route component={NotFound} />
                 </Switch>
